@@ -4,8 +4,8 @@ import { Activity } from "../models/activityModel.js";
 export const bookActivity = async (req, res) => {
   try {
     const { activityId } = req.params;
-    console.log("req.user._id", req.user);
-    const userId = req.user;
+    console.log("req", req.user);
+    const userId = req.user.id;
 
     const activity = await Activity.findOne({
       _id: activityId,
@@ -56,9 +56,10 @@ export const bookActivity = async (req, res) => {
   }
 };
 
+
 export const getMyBookings = async (req, res) => {
   try {
-    const userId = req.user;
+    const userId = req.user.id;
 
     const bookings = await Booking.find({ user: userId })
       .populate({

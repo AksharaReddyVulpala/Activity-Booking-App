@@ -9,7 +9,8 @@ const router = express.Router();
 
 router.use(validateToken);
 
-router.post("/:activityId", bookActivity);
+
 router.get("/my-bookings", getMyBookings);
+router.post("/:activityId", bookActivity);
 
 export default router;
