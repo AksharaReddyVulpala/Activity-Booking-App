@@ -29,6 +29,12 @@ connectDb().then(() => {
 });
 
 // Routes
+
+app.get('/', (req, res) => {
+  res.send("Hello from root route!");
+});
+
+
 app.use('/api/users', authRoutes);
 app.use('/api/activities', activityRoutes);
 app.use('/api/bookings', bookingRoutes);
@@ -38,10 +44,10 @@ mongoose.connection.once('open', () => {
    if (process.env.NODE_ENV === 'development') {
     addActivities(); 
   }
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Connected to DB: ${mongoose.connection.name}`);
-  });
+  // app.listen(PORT, () => {
+  //   console.log(`Server running on port ${PORT}`);
+  //   console.log(`Connected to DB: ${mongoose.connection.name}`);
+  // });
 });
 
 export default app;
