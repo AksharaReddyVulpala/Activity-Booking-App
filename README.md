@@ -93,9 +93,9 @@ Start the server
 [API-Documentation-Postman](https://www.postman.com/joint-operations-geoscientist-60983476/my-workspace/request/66hnx4p/https-booking-app-six-theta-vercel-app)
 
 
-[Deployment-Live-URL](https://booking-app-six-theta.vercel.app/)
+[Vercel-Deployment-Live-URL](https://booking-app-six-theta.vercel.app/)
 
 
-[Vercel-Deployment-URL](https://vercel.com/aksharareddys-projects/booking-app)
+
 
 
