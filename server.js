@@ -9,7 +9,7 @@ import bookingRoutes from "./Routes/bookingRoutes.js";
 dotenv.config();
 
 const app = express();
-// const PORT = process.env.PORT || 3000;
+
 
 // Middleware
 app.use(express.json());
@@ -32,5 +32,13 @@ app.get("/", (req, res) => {
 app.use("/api/users", authRoutes);
 app.use("/api/activities", activityRoutes);
 app.use("/api/bookings", bookingRoutes);
+
+
+//un comment to run locally
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
+
 
 export default app;
