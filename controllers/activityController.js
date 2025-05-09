@@ -30,7 +30,7 @@ export const getActivities = async (req, res) => {
 
 export const addActivity = async (req, res) => {
   try {
-    const { title, description, location, dateTime, capacity } = req.body;
+    const { title, description, location, dateTime } = req.body;
 
     if (new Date(dateTime) <= new Date()) {
       return res.status(400).json({
@@ -44,7 +44,6 @@ export const addActivity = async (req, res) => {
       description,
       location,
       dateTime,
-      capacity: capacity || 20,
     });
 
     res.status(201).json({
@@ -59,6 +58,27 @@ export const addActivity = async (req, res) => {
       error: error.message.includes("validation failed")
         ? error.message.split(": ")[2]
         : error.message,
+    });
+  }
+};
+
+export const addMultipleActivities = async (req, res) => {
+  try {
+    const activities = req.body; 
+    console.log("activities", activities);
+
+    const insertedActivities = await Activity.insertMany(activities);
+
+    res.status(201).json({
+      success: true,
+      count: insertedActivities.length,
+      data: insertedActivities,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Bulk insert failed",
+      error: error.writeErrors?.map((err) => err.errmsg) || error.message,
     });
   }
 };
