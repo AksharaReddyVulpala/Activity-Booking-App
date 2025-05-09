@@ -27,11 +27,6 @@ const ActivitySchema = new mongoose.Schema(
         },
         message: 'Activity date must be in the future'
       }
-    },
-    capacity: {
-      type: Number,
-      min: [1, 'Capacity must be at least 1'],
-      default: 20
     }
   },
   {
