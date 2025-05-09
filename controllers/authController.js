@@ -2,9 +2,25 @@ import { User } from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+import validator from "validator";
+
 export const registerUser = async (req, res) => {
   try {
     const { username, email, phone, password } = req.body;
+
+    if (!email || !validator.isEmail(email)) {
+      return res.status(400).json({ message: "Please provide a valid email" });
+    }
+
+    if (!password || password.length < 6) {
+      return res.status(400).json({ 
+        message: "Password must be at least 6 characters" 
+      });
+    }
+
+ if (!phone || !/^\d{10}$/.test(phone)) {
+  return res.status(400).json({ message: "Phone number must be exactly 10 digits" });
+}
 
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -30,6 +46,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -39,10 +56,12 @@ export const loginUser = async (req, res) => {
         .status(400)
         .json({ message: "Email and password are required" });
     }
-
+    if (!validator.isEmail(email)) {
+  return res.status(400).json({ message: "Invalid email format" });
+   }
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Not Registered.Please Register" });
     }
 
     if (!user.password) {
@@ -51,7 +70,7 @@ export const loginUser = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Password Mismatch . Please Enter Again" });
     }
 
     const token = jwt.sign(
